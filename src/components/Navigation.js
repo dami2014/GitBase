@@ -1,23 +1,23 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
-import { Github } from 'lucide-react'
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { Github } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const navItems = [
-  { path: '/', label: 'Home' },
-  { path: '/resources', label: 'Resources' },
-  { path: '/posts', label: 'Articles' },
-]
+  { path: "/", label: "Home" },
+  { path: "/resources", label: "Resources" },
+  { path: "/posts", label: "Articles" },
+];
 
 export function Navigation() {
-  const pathname = usePathname()
-  const router = useRouter()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const pathname = usePathname();
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
@@ -25,11 +25,11 @@ export function Navigation() {
       if (!isMounted) return;
       setIsLoading(true);
       try {
-        const response = await fetch('/api/check-auth');
+        const response = await fetch("/api/check-auth");
         const data = await response.json();
         if (isMounted) setIsLoggedIn(data.isLoggedIn);
       } catch (error) {
-        console.error('Failed to check auth status:', error);
+        console.error("Failed to check auth status:", error);
       } finally {
         if (isMounted) setIsLoading(false);
       }
@@ -44,16 +44,21 @@ export function Navigation() {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/logout', { method: 'POST' });
+      await fetch("/api/logout", { method: "POST" });
       setIsLoggedIn(false);
-      router.push('/');
+      router.push("/");
     } catch (error) {
-      console.error('Failed to logout:', error);
+      console.error("Failed to logout:", error);
     }
   };
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background">
+      {/* 引入 lazysizes 懒加载库 */}
+      <script
+        async
+        src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"
+      ></script>
       <div className="container flex h-16 items-center justify-between">
         <div className="flex gap-6 md:gap-10">
           <Link href="/" className="flex items-center space-x-2">
@@ -84,22 +89,23 @@ export function Navigation() {
             <Github className="h-5 w-5" />
             <span className="sr-only">GitHub</span>
           </Link>
-          {!isLoading && (
-            isLoggedIn ? (
+          {!isLoading &&
+            (isLoggedIn ? (
               <>
                 <Link href="/admin">
                   <Button variant="ghost">Admin</Button>
                 </Link>
-                <Button onClick={handleLogout} variant="outline">Logout</Button>
+                <Button onClick={handleLogout} variant="outline">
+                  Logout
+                </Button>
               </>
             ) : (
               <Link href="/login">
                 <Button>Login</Button>
               </Link>
-            )
-          )}
+            ))}
         </div>
       </div>
     </header>
-  )
+  );
 }
