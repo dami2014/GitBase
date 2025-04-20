@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { newGames } from '../lib/games';
 import { useState } from 'react';
 
-export default function NumSeriesGameList() {
+export default function NewGameList() {
   return (
     <div
       style={{

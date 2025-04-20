@@ -6,7 +6,7 @@ export function Layout({ children }) {
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <Navigation />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 px-4">{children}</main>
       <Footer />
     </div>
   )

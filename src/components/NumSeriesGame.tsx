@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useRef } from "react";
-import NumSeriesGameList from "./NumSeriesGameList"; // 确保路径正确
+import HotGameList from "@/components/HotGameList";
+import NewGameList from "@/components/newGameList";
+import NumSeriesGameList from "@/components/NumSeriesGameList"; // 确保路径正确
 
 interface GameParams {
   id: string;
@@ -10,8 +12,16 @@ interface GameParams {
   imageSrc: string;
 }
 
-export default function GeometryDashGame({ params }: { params: GameParams }) {
-  const { name, iframeSrc, imageSrc } = params;
+const defaultGame: GameParams = {
+  id: "Geometry-Dash-Nemesyis",
+  name: "Geometry Dash Nemesis",
+  iframeSrc:
+    "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
+  imageSrc: "/test.webp",
+};
+
+export default function GeometryDashGame({ params }: { params?: GameParams }) {
+  const { name, iframeSrc, imageSrc } = params ?? defaultGame;
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -32,11 +42,10 @@ export default function GeometryDashGame({ params }: { params: GameParams }) {
 
   return (
     <main>
-      <div className="flex justify-center py-8">
-        <div className="hidden 2xl:block w-[300px]">
-          <div className="mx-auto min-w-[240px] min-h-[200px] bg-gray-100 text-center">
-            左侧广告
-          </div>
+      <div className="flex justify-center py-2 gap-x-4">
+        <div className="mx-auto min-w-[300px] bg-gray-100 text-center hidden xl:block">
+          {/* <h3>Popular Games</h3> */}
+          <HotGameList />
         </div>
 
         <div style={{ width: "100%", margin: "0 auto" }}>
@@ -184,10 +193,9 @@ export default function GeometryDashGame({ params }: { params: GameParams }) {
           <NumSeriesGameList />
         </div>
 
-        <div className="hidden xl:block w-[300px]">
-          <div className="mx-auto min-w-[240px] min-h-[200px] bg-gray-100 text-center">
-            右侧广告
-          </div>
+        <div className="mx-auto min-w-[300px] bg-gray-100 text-center">
+          {/* <h3>Popular Games</h3> */}
+          <NewGameList />
         </div>
       </div>
     </main>
