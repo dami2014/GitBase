@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import HotGameList from "@/components/HotGameList";
 import NewGameList from "@/components/newGameList";
-import NumSeriesGameList from "@/components/NumSeriesGameList"; // 确保路径正确
+import NumSeriesGameList from "@/components/NumSeriesGameList";
 
 interface GameParams {
   id: string;
@@ -29,22 +29,44 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
 
   const handlePlay = () => setIsPlaying(true);
 
-  const handleFullscreen = () => {
+  const handleFullscreen = async () => {
     const iframe = iframeRef.current;
-    if (isFullscreen && document.fullscreenElement) {
-      document.exitFullscreen?.();
-      setIsFullscreen(false);
-    } else if (iframe) {
-      iframe.requestFullscreen?.();
-      setIsFullscreen(true);
+    if (!iframe) return;
+  
+    try {
+      // 当点击 fullscreen 时，确保 iframe 显示出来
+      if (!isPlaying) {
+        setIsPlaying(true); // 确保 iframe 被渲染出来
+      }
+  
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      } else {
+        await iframe.requestFullscreen();
+        setIsFullscreen(true);
+      }
+    } catch (err) {
+      console.error("Fullscreen error:", err);
     }
   };
+  
+
+  // 监听退出全屏（比如按 ESC）
+  useEffect(() => {
+    const onFullChange = () => {
+      if (!document.fullscreenElement) {
+        setIsFullscreen(false);
+      }
+    };
+    document.addEventListener("fullscreenchange", onFullChange);
+    return () => document.removeEventListener("fullscreenchange", onFullChange);
+  }, []);
 
   return (
     <main>
       <div className="flex justify-center py-2 gap-x-4">
         <div className="mx-auto min-w-[300px] bg-gray-100 text-center hidden xl:block">
-          {/* <h3>Popular Games</h3> */}
           <HotGameList />
         </div>
 
@@ -56,12 +78,6 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
               borderRadius: "1rem",
               marginBottom: "1rem",
               display: isPlaying ? "block" : "none",
-              position: isFullscreen ? "fixed" : "relative",
-              top: isFullscreen ? 0 : "auto",
-              left: isFullscreen ? 0 : "auto",
-              width: isFullscreen ? "100vw" : "auto",
-              height: isFullscreen ? "100vh" : "auto",
-              zIndex: isFullscreen ? 9999 : "auto",
             }}
           >
             <iframe
@@ -71,6 +87,7 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
               height="590"
               scrolling="no"
               frameBorder="0"
+              allow="fullscreen"
               allowFullScreen
               sandbox="allow-scripts allow-same-origin"
               title={name}
@@ -194,7 +211,6 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
         </div>
 
         <div className="mx-auto min-w-[300px] bg-gray-100 text-center">
-          {/* <h3>Popular Games</h3> */}
           <NewGameList />
         </div>
       </div>
