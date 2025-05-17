@@ -20,20 +20,21 @@ export function Navigation() {
           {/* 网站名称 */}
           <Link
             href="/"
-            className="text-xl font-extrabold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+            className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
+            style={{
+              fontFamily: `'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif`,
+              letterSpacing: "-0.5px",
+            }}
           >
             Geometry Dash Club
           </Link>
 
           {/* 导航链接 */}
-          <nav className="flex items-center space-x-4 sm:space-x-6">
+          <nav className="flex items-center space-x-6">
             <NavItem href={`/subgame/${subzeroGames[0]?.id}`} label="Subzero" />
             <NavItem href={`/subgame/${liteGames[0]?.id}`} label="Lite" />
             <NavItem href={`/subgame/${worldGames[0]?.id}`} label="World" />
-            <NavItem
-              href={`/subgame/${meltdownGames[0]?.id}`}
-              label="Meltdown"
-            />
+            <NavItem href={`/subgame/${meltdownGames[0]?.id}`} label="Meltdown" />
           </nav>
         </div>
       </div>
@@ -46,9 +47,25 @@ function NavItem({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+      className="transition-colors"
+      style={{
+        fontSize: "1.25rem", // 大字体
+        fontWeight: 700,      // 粗体
+        color: "var(--tw-prose-body, #374151)", // 默认深灰（tailwind gray-700）
+        fontFamily: `'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif`,
+        letterSpacing: "-0.4px",
+        userSelect: "none",
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget.style.color = "#ff6600"); // 橙色悬停
+        e.currentTarget.style.textDecoration = "underline";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget.style.color = "var(--tw-prose-body, #374151)");
+        e.currentTarget.style.textDecoration = "none";
+      }}
     >
-      Geometry Dash {label}
+      Geometry Dash <span style={{ color: "#ff6600" }}>{label}</span>
     </Link>
   );
 }

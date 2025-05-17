@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import HotGameList from "@/components/HotGameList";
-import NewGameList from "@/components/newGameList";
-import NumSeriesGameList from "@/components/NumSeriesGameList";
+import NewGameList from "@/components/NewGameList";
+import SeriesGameList from "@/components/SeriesGameList";
 
 interface GameParams {
   id: string;
@@ -20,7 +20,7 @@ const defaultGame: GameParams = {
   imageSrc: "/test.webp",
 };
 
-export default function GeometryDashGame({ params }: { params?: GameParams }) {
+export default function RootGame({ params }: { params?: GameParams }) {
   const { name, iframeSrc, imageSrc } = params ?? defaultGame;
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,13 +32,13 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
   const handleFullscreen = async () => {
     const iframe = iframeRef.current;
     if (!iframe) return;
-  
+
     try {
       // 当点击 fullscreen 时，确保 iframe 显示出来
       if (!isPlaying) {
         setIsPlaying(true); // 确保 iframe 被渲染出来
       }
-  
+
       if (document.fullscreenElement) {
         await document.exitFullscreen();
         setIsFullscreen(false);
@@ -50,7 +50,7 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
       console.error("Fullscreen error:", err);
     }
   };
-  
+
 
   // 监听退出全屏（比如按 ESC）
   useEffect(() => {
@@ -173,44 +173,63 @@ export default function GeometryDashGame({ params }: { params?: GameParams }) {
           >
             <h1
               style={{
-                fontSize: "1.125rem",
-                fontWeight: 600,
+                fontSize: "2rem",                 // 大号字体
+                fontWeight: 800,                  // 加粗字体
                 margin: 0,
+                textAlign: "left",                // 左对齐
+                color: "#111827",                 // 深灰色，类似 Tailwind slate-900
+                fontFamily: `'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif`, // 字体族
+                lineHeight: 1.2,
+                letterSpacing: "-0.5px",
+                userSelect: "none",
               }}
             >
-              {name}
+              {name.split(' ').map((word, i) =>
+                i === name.split(' ').length - 1 ? (  // 给最后一个单词加橙色
+                  <span key={i} style={{ color: "#ff6600" }}>
+                    {word}
+                  </span>
+                ) : (
+                  word + " "
+                )
+              )}
             </h1>
             <button
               onClick={handleFullscreen}
               style={{
-                padding: "0.45rem 1rem",
-                fontSize: "0.95rem",
-                borderRadius: "0.5rem",
-                backgroundColor: "#007bff",
-                color: "#fff",
+                padding: "0.8rem 2rem",
+                fontSize: "1.25rem",
+                fontWeight: 800,
+                borderRadius: "0.75rem",
+                backgroundColor: "#ff6600",   // 橙色主色调，呼应标题高亮
+                color: "white",
                 border: "none",
                 cursor: "pointer",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-                transition: "background-color 0.3s ease, transform 0.2s ease",
+                boxShadow: "0 5px 15px rgba(255, 102, 0, 0.4)",
+                transition: "background-color 0.3s ease, transform 0.15s ease",
+                userSelect: "none",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#0056b3";
-                e.currentTarget.style.transform = "scale(1.05)";
+                e.currentTarget.style.backgroundColor = "#e65c00";  // 橙色悬停色
+                e.currentTarget.style.transform = "scale(1.07)";
+                e.currentTarget.style.boxShadow = "0 8px 20px rgba(230, 92, 0, 0.6)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#007bff";
+                e.currentTarget.style.backgroundColor = "#ff6600";
                 e.currentTarget.style.transform = "scale(1)";
+                e.currentTarget.style.boxShadow = "0 5px 15px rgba(255, 102, 0, 0.4)";
               }}
             >
               Fullscreen
             </button>
           </div>
 
-          <h2 className="text-xl mt-8 font-semibold">更多子游戏</h2>
-          <NumSeriesGameList />
+
+          <h2 className="text-xl mt-8 font-semibold">Geometry Dash Series</h2>
+          <SeriesGameList />
         </div>
 
-        <div className="mx-auto min-w-[300px] bg-gray-100 text-center">
+        <div className="mx-auto min-w-[300px] bg-gray-100 text-center hidden md:block">
           <NewGameList />
         </div>
       </div>

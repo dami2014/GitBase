@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { numSeriesGame } from "../lib/games";
 import { useState } from "react";
+import Image from 'next/image';
 
-export default function NumSeriesGameList() {
+export default function SeriesGameList() {
   return (
     <div
       style={{
@@ -43,23 +44,20 @@ function HoverCard({ game }: { game: any }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <picture>
-        <source data-srcset={game.imageSrc} type="image/webp" />
-        <img
-          data-src={game.imageSrc}
-          alt={game.name}
-          className="lazyload"
-          style={{
-            width: "100%",
-            height: "auto",
-            objectFit: "cover",
-            borderRadius: "1rem",
-            display: "block",
-            transition: "transform 0.3s ease",
-            transform: hovered ? "scale(1.03)" : "scale(1)",
-          }}
-        />
-      </picture>
+      <Image
+        src={game.imageSrc}
+        alt={game.name}
+        width={300} // 或你页面适合的值
+        height={140} // 或 auto
+        style={{
+          objectFit: "cover",
+          borderRadius: "1rem",
+          display: "block",
+          transition: "transform 0.3s ease",
+          transform: hovered ? "scale(1.03)" : "scale(1)",
+        }}
+        loading="lazy"
+      />
 
       {/* 浮层文字，透明渐变效果 */}
       <div

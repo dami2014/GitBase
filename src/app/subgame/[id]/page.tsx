@@ -1,9 +1,9 @@
 // app/subgame/[id]/page.tsx
 import { notFound } from "next/navigation";
-import { numSeriesGame, hotGames, newGames } from "../../../lib/games";
-import GeometryDashGame from "../../../components/NumSeriesGame";
+import { numSeriesGame, hotGames, newGames, subzeroGames, liteGames, worldGames, meltdownGames } from "../../../lib/games";
+import RootGame from "../../RootGame";
 
-const allGames = [...numSeriesGame, ...hotGames, ...newGames];
+const allGames = [...numSeriesGame, ...hotGames, ...newGames, ...subzeroGames, ...liteGames, ...worldGames, ...meltdownGames];
 
 export default async function SubGamePage({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -13,7 +13,7 @@ export default async function SubGamePage({ params }: { params: { id: string } }
     notFound();
   }
 
-  return <GeometryDashGame params={game} />;
+  return <RootGame params={game} />;
 }
 
 export async function generateStaticParams() {

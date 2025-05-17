@@ -4,20 +4,53 @@ export interface Game {
   id: string;
   name: string;
   iframeSrc: string;
-  imageSrc?: string;
+  imageSrc: string;
   device?: "mobile" | "desktop";
 }
 
+export const meltdownGames: Game[] = [
+  {
+    id: "Geometry-Dash-Meltdown",
+    name: "Geometry Dash Meltdown",
+    iframeSrc:
+      "https://1games.io/game/geometry-dash-meltdown/",
+    imageSrc: "/meltdown_1260x630-m200x130.webp",
+  },
+];
+
+export const subzeroGames: Game[] = [
+  {
+    id: "Geometry-Dash-SubZero",
+    name: "Geometry Dash SubZero",
+    iframeSrc:
+      "https://1games.io/game/geometry-dash-subzero/",
+    imageSrc: "/geo_subzero_3-m200x130.webp",
+  },
+];
+
+export const worldGames: Game[] = [
+  {
+    id: "Geometry-Dash-World",
+    name: "Geometry Dash World",
+    iframeSrc:
+      "https://1games.io/game/geometry-dash-world/",
+    imageSrc: "/geometry-world-m200x130.webp",
+  },
+];
+
+export const liteGames: Game[] = [
+  {
+    id: "Geometry-Dash-lite",
+    name: "Geometry Dash lite",
+    iframeSrc:
+      "https://geometrydashlitepc.io/game/geometry-dash-lite/",
+    imageSrc: "/test.webp",
+  },
+];
+
 export const hotGames: Game[] = [
   {
-    id: "Geometry-Dash-Nemffesis",
-    name: "Geometry Dash Nemesis",
-    iframeSrc:
-      "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
-    imageSrc: "/geometry-dash-spam-2.webp",
-  },
-  {
-    id: "Geometry-Dash-Nemffesis",
+    id: "Geometry-Dash-Nemffesisss",
     name: "Geometry Dash Nemesis",
     iframeSrc:
       "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
@@ -76,7 +109,7 @@ export const newGames: Game[] = [
     imageSrc: "/geometry-dash-spam-2.webp",
   },
   {
-    id: "Geometry-Dash-Nemffesis",
+    id: "Geometry-Dash-Nemffesisss",
     name: "Geometry Dash Nemesis",
     iframeSrc:
       "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
@@ -209,42 +242,6 @@ export const numSeriesGame: Game[] = [
   },
 ];
 
-export const liteGames: Game[] = [
-  {
-    id: "Geometry-Dash-Nemesis",
-    name: "Geometry Dash Nemesis",
-    iframeSrc:
-      "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
-    imageSrc: "/test.webp",
-  },
-];
 
-export const subzeroGames: Game[] = [
-  {
-    id: "Geometry-Dash-Neddmesis",
-    name: "Geometry Dash Nemesis",
-    iframeSrc:
-      "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
-    imageSrc: "/test.webp",
-  },
-];
 
-export const meltdownGames: Game[] = [
-  {
-    id: "Geometry-Dash-Nemeddsis",
-    name: "Geometry Dash Nemesis",
-    iframeSrc:
-      "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
-    imageSrc: "/test.webp",
-  },
-];
 
-export const worldGames: Game[] = [
-  {
-    id: "Geometry-Dash-ssNemesis",
-    name: "Geometry Dash Nemesis",
-    iframeSrc:
-      "https://files.twoplayergames.org/files/games/g1/geometry-vibes-v11/index.html",
-    imageSrc: "/test.webp",
-  },
-];

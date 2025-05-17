@@ -1,6 +1,6 @@
 
 import { Metadata } from "next";
-import GeometryDashGame from "@/components/NumSeriesGame";
+import RootGame from "@/app/RootGame";
 
 export const metadata: Metadata = {
   title: "GitBase - Open Source Dynamic Website CMS Without Database",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div>
-      <GeometryDashGame />
+      <RootGame />
     </div>
   );
 }
